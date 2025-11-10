@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReportSupportTool"
         xmlns:vm="clr-namespace:ReportSupportTool.ViewModels"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
@@ -68,8 +69,20 @@
         </GroupBox>
 
         <!--Show chart statistics-->
-        <Grid Grid.Row="2">
-            
-        </Grid>
+        <GroupBox Header="Issue Status by Member" Grid.Row="2" Padding="15">
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" 
+                            LegendLocation="Right" Height="157">
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Quý" Labels="{Binding Labels}"/>
+                </lvc:CartesianChart.AxisX>
+
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Doanh số (Triệu VNĐ)" 
+                          LabelFormatter="{Binding YFormatter}"/>
+                </lvc:CartesianChart.AxisY>
+
+            </lvc:CartesianChart>
+        </GroupBox>
     </Grid>
 </Window>

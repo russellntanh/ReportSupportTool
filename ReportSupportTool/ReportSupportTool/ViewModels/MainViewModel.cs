@@ -1,12 +1,9 @@
-﻿using ReportSupportTool.Models;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using ReportSupportTool.Models;
 using ReportSupportTool.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ReportSupportTool.ViewModels
@@ -51,6 +48,7 @@ namespace ReportSupportTool.ViewModels
             {
                 MemberStatusCollection.Add(member);
             }
+            DrawByLiveChart();
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null)
@@ -58,6 +56,35 @@ namespace ReportSupportTool.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+        public SeriesCollection SeriesCollection { get; set; }
+
+        // 2. Thuộc tính để chứa Nhãn của Trục X (Quý)
+        public string[] Labels { get; set; }
+
+        // 3. Thuộc tính cho Trình định dạng Nhãn Trục Y (Hiển thị đơn vị)
+        public Func<double, string> YFormatter { get; set; }
+
+        private void DrawByLiveChart()
+        {
+            /// ---1.Dữ liệu Biểu đồ(Series)-- -
+            SeriesCollection = new SeriesCollection
+            {
+                // BarSeries là biểu đồ thanh
+                new ColumnSeries
+                {
+                    Title = "Doanh số 2025",
+                    // Values là một ChartValues<T> chứa các giá trị
+                    Values = new ChartValues<double> { 50, 100, 200, 150 }
+                }
+            };
+
+            // --- 2. Nhãn Trục X (Labels) ---
+            Labels = new[] { "Quý 1", "Quý 2", "Quý 3", "Quý 4" };
+
+            // --- 3. Định dạng Trục Y (Formatter) ---
+            // Định dạng giá trị Y thành "X Triệu"
+            // Ví dụ: 50 -> "50 Triệu"
+            YFormatter = value => value.ToString("N0") + " Triệu";
+        }
     }
 }
