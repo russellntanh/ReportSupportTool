@@ -7,15 +7,40 @@
         xmlns:vm="clr-namespace:ReportSupportTool.ViewModels"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="Weekly Report Tool" Height="600" Width="800">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Blue"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border 
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="3" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="300"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -28,7 +53,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="File Name:" VerticalAlignment="Center"/>
                 <TextBox x:Name="ReportNameTextBox" Width="625" Margin="5,0,5,0" Height="25"/>
-                <Button x:Name="Load" Content="Load" Width="80"
+                <Button x:Name="Load" Content="Load" Width="80" Style="{StaticResource ButtonStyle}"
                             Command="{Binding LoadDataCommand}" />
             </StackPanel>
         </Grid>
@@ -46,30 +71,33 @@
                       RowHeaderWidth="0">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Assignee" 
-                                        Binding="{Binding Assignee}" 
-                                        Width="180"/>
-                    <DataGridTextColumn Header="Status" 
-                                        Binding="{Binding Status}" 
-                                        Width="100"/>
-                    <DataGridTextColumn Header="Summary" 
-                                        Binding="{Binding Summary}" 
-                                        Width="350"/>
-                    <DataGridTextColumn Header="Sprint" 
-                                        Binding="{Binding Sprint}" 
-                                        Width="150"/>
-                    <DataGridTextColumn Header="Type" 
-                                        Binding="{Binding IssueType}" 
-                                        Width="100"/>
-                    <DataGridTextColumn Header="Story Point"
-                                        Binding="{Binding StoryPoints}"
-                                        Width="100"/>
+                    <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}" Width="180"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                    <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="350"/>
+                    <DataGridTextColumn Header="Sprint" Binding="{Binding Sprint}"  Width="150"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding IssueType}"  Width="100"/>
+                    <DataGridTextColumn Header="Story Point" Binding="{Binding StoryPoints}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <!--Groupped data by each member-->
+        <GroupBox Header="Grouped data by each member" Grid.Row="2" Padding="10">
+            <DataGrid ItemsSource="{Binding MemberStatusCollection}"
+                      GridLinesVisibility="All"
+                      AlternatingRowBackground="#FFF5F5F5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Assignee" Binding="{Binding MemberName}" Width="180"/>
+                    <DataGridTextColumn Header="Holding" Binding="{Binding HoldingCount}" Width="100"/>
+                    <DataGridTextColumn Header="To Do" Binding="{Binding ToDoCount}" Width="100"/>
+                    <DataGridTextColumn Header="In Progress" Binding="{Binding InProgressCount}" Width="100"/>
+                    <DataGridTextColumn Header="Done" Binding="{Binding DoneCount}" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
 
         <!--Show chart statistics-->
-        <GroupBox Header="Issue Status by Member" Grid.Row="2" Padding="15">
+        <GroupBox Header="Issue Status by Member" Grid.Row="3" Padding="15">
             <lvc:CartesianChart Series="{Binding SeriesCollection}" 
                             LegendLocation="Right" Height="157">
 
