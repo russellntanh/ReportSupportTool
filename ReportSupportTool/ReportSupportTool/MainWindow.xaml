@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:ReportSupportTool.ViewModels"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Weekly Report Tool" Height="600" Width="800">
+        Title="Weekly Report Tool" Height="700" Width="850">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
@@ -71,12 +71,12 @@
                       RowHeaderWidth="0">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}" Width="180"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
-                    <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="350"/>
-                    <DataGridTextColumn Header="Sprint" Binding="{Binding Sprint}"  Width="150"/>
-                    <DataGridTextColumn Header="Type" Binding="{Binding IssueType}"  Width="100"/>
-                    <DataGridTextColumn Header="Story Point" Binding="{Binding StoryPoints}" Width="100"/>
+                    <DataGridTextColumn Header="Assignee" Binding="{Binding Assignee}" Width="170"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="90"/>
+                    <DataGridTextColumn Header="Summary" Binding="{Binding Summary}" Width="250"/>
+                    <DataGridTextColumn Header="Sprint" Binding="{Binding Sprint}"  Width="120"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding IssueType}"  Width="60"/>
+                    <DataGridTextColumn Header="Story Point" Binding="{Binding StoryPoints}" Width="70"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
@@ -85,7 +85,8 @@
         <GroupBox Header="Grouped data by each member" Grid.Row="2" Padding="10">
             <DataGrid ItemsSource="{Binding MemberStatusCollection}"
                       GridLinesVisibility="All"
-                      AlternatingRowBackground="#FFF5F5F5">
+                      AlternatingRowBackground="#FFF5F5F5"
+                      AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Assignee" Binding="{Binding MemberName}" Width="180"/>
                     <DataGridTextColumn Header="Holding" Binding="{Binding HoldingCount}" Width="100"/>
